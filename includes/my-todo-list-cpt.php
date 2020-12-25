@@ -1,7 +1,6 @@
 <?php 
 // Create custom post type
-function mtl_register_todo()
-{
+function mtl_register_todo(){
     $singular_name = apply_filters('mtl_lable_single', 'Todo');
     $plural_name = apply_filters('mtl_lable_plural', 'Todos');
 
@@ -9,7 +8,7 @@ function mtl_register_todo()
         'name'               => $plural_name,
         'singular_name'      => $singular_name,
         'add_new'            => 'Add New',
-        'add_new_item'       => 'Add New'. $singular_name,
+        'add_new_item'       => 'Add New '. $singular_name,
         'edit'               => 'Edit',
         'edit_item'          => 'Edit '. $singular_name,
         'new_item'           => 'New '. $singular_name,
@@ -22,19 +21,19 @@ function mtl_register_todo()
     );
 
     $args = apply_filters( 'mtl_todo_args', array(
-        'lables' => $labels,
-        'description' => 'Todos by category',
-        'taxonomies' => array('category'),
-        'public'    => true,
-        'show_in_mwnu' => true,
-        'menu_position' => 5,
-        'menu_icon' => 'dashicons-edit',
+        'labels'            => $labels,
+        'description'       => 'Todos by category',
+        'taxonomies'        => array('category'),
+        'public'            => true,
+        'show_in_mwnu'      => true,
+        'menu_position'     => 5,
+        'menu_icon'         => 'dashicons-edit',
         'show_in_nav_menus' => true,
-        'query_var' => true,
-        'can_expert' => true,
-        'rewrite' => array('slug' => 'todo'),
-        'capability_type' => 'post',
-        'supports'  => array(
+        'query_var'         => true,
+        'can_expert'        => true,
+        'rewrite'           => array('slug' => 'todo'),
+        'capability_type'   => 'post',
+        'supports'          => array(
             'title'
         )
     ) );
