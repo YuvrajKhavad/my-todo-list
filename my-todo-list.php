@@ -38,11 +38,4 @@ if(is_admin())
     // Load custome filed
     require_once(MTL_INCLUDES. 'my-todo-list-field.php');
 }
-
-// Register Widget
-/*function register_newsletter_subscriber()
-{
-    //register_widget('newsletter_subscriber_widget');
-}
-//add_action('widgets_init', 'register_newsletter_subscriber');*/
 ?>
