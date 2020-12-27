@@ -22,33 +22,70 @@ function mtl_todo_fields_callback($post)
         <div class = "form-group">
             <lable for = "priority"><?php esc_html_e( 'Priority' , 'mtl_domain')?></lable>
             <?php
-                $priority = array('Low', 'Normal', 'High'); 
-                echo "<pre>";
-                print_r($priority);
-                echo "</pre>";
+            $priority = array('Low', 'Normal', 'High'); 
             ?>
-            <select name = "priority" id = "priority">
-            
-            <?php
-                foreach ($priority as $key => $value) {
-                    echo $key. "--";
-                    echo $value;
-                    # code...
-                    echo '11-';
-                }
-                foreach($option_values as $value)
+            <select name="priority" id="priority">
+                <?php 
+                foreach( $priority as $key => $value )
                 {
-                    echo $value;
-                    //$selected = ($value = $mtl_todo_stored_meta['priority'][0])?' selected':'';
-                    ?>
-                    <?php
-
+                    $selected = ($value == $mtl_todo_stored_meta['priority'][0])?' selected':'';
+                    echo '<option '.$selected.'>'.$value.'</option>';
                 }
-            ?>
+                ?>
             </select>
+        </div>
+                <br/>
+        <div class = "form-group">
+            <lable for = "details"><?php esc_html_e( 'Details' , 'mtl_domain')?></lable>
+            <?php 
+                $content = get_post_meta($post->ID, 'details', true);
+                $editor = "details";
+                $settings =  array (
+                    'textarea_row' => 5,
+                    'media_buttons' => true
+                );
+
+                wp_editor($content, $editor, $settings)
+            ?>
+        </div>
+        <br/>
+
+        <div class = "form-group">
+            <lable for = "due-date"><?php esc_html_e( 'Due Date' , 'mtl_domain')?></lable>
+            <input type = 'date' name = "due_date"  id = "due_date" value = "<?php if( !empty($mtl_todo_stored_meta['due_date'][0])) echo  esc_attr($mtl_todo_stored_meta['due_date'][0]) ?>" >
         </div>
     </div>
     <?php
 }
+
+// code for same settings
+function mtl_todo_save($post_id)
+{
+    $is_autosave = wp_is_post_autosave($post_id);
+    $is_revision = wp_is_post_revision($post_id);
+    $is_valid_nonce = ( isset($_POST['wp_todos_nonce']) && wp_verify_nonce($_POST['wp_todos_nonce'], basename(__FILE__)) ) ? 'true' : 'false';
+
+    if($is_autosave || $is_revision || !$is_valid_nonce)
+    {
+        return;
+    }
+
+    if(isset($_POST['priority']))
+    {
+        update_post_meta($post_id, 'priority', sanitize_text_field($_POST['priority']));
+    }
+
+    if(isset($_POST['details']))
+    {
+        update_post_meta($post_id, 'details', sanitize_text_field($_POST['details']));
+    }
+
+    if(isset($_POST['due_date']))
+    {
+        update_post_meta($post_id, 'due_date', sanitize_text_field($_POST['due_date']));
+    }
+
+}
+add_action( 'save_post', 'mtl_todo_save' );
 
 ?>
