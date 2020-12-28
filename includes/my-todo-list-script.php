@@ -14,7 +14,7 @@
     function mtl_add_script()
     {
         wp_enqueue_style( 'mtl-style', MTL_PLUGIN_CSS . 'style.css');
-        wp_enqueue_script( 'mtl-js', MTL_PLUGIN_JS . 'main.js' , array(jquery));
+        wp_enqueue_script( 'mtl-js', MTL_PLUGIN_JS . 'main.js');
     }
     add_action('wp_enqueue_scripts', 'mtl_add_script')
 ?>
